@@ -1,0 +1,6 @@
+framework module Pods_UberUIKit {
+  umbrella header "Pods-UberUIKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
