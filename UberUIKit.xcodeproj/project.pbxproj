@@ -63,7 +63,6 @@
 				453D335F255A28F80023C807 /* View */,
 				453D334A255A28B90023C807 /* AppDelegate.swift */,
 				453D334C255A28B90023C807 /* SceneDelegate.swift */,
-				453D3350255A28B90023C807 /* Main.storyboard */,
 				453D3353255A28B90023C807 /* Assets.xcassets */,
 				453D3355255A28B90023C807 /* LaunchScreen.storyboard */,
 				453D3358255A28B90023C807 /* Info.plist */,
@@ -81,6 +80,7 @@
 		453D3361255A290A0023C807 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				453D3350255A28B90023C807 /* Main.storyboard */,
 			);
 			path = Model;
 			sourceTree = "<group>";
