@@ -18,6 +18,7 @@
 		453D3374255AF4030023C807 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D3373255AF4030023C807 /* SignUpController.swift */; };
 		453D3378255B1BF80023C807 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D3377255B1BF80023C807 /* AuthButton.swift */; };
 		453D337B255B254D0023C807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 453D337A255B254D0023C807 /* GoogleService-Info.plist */; };
+		453D33B4255B4A3E0023C807 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D33B3255B4A3E0023C807 /* HomeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		453D3373255AF4030023C807 /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		453D3377255B1BF80023C807 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		453D337A255B254D0023C807 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		453D33B3255B4A3E0023C807 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		4AA2E1BBFD06DFCD7CC7399E /* Pods-UberUIKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UberUIKit.release.xcconfig"; path = "Target Support Files/Pods-UberUIKit/Pods-UberUIKit.release.xcconfig"; sourceTree = "<group>"; };
 		AACA1591F8F0DBCD3BB216AF /* Pods-UberUIKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UberUIKit.debug.xcconfig"; path = "Target Support Files/Pods-UberUIKit/Pods-UberUIKit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +109,7 @@
 			children = (
 				453D3367255A2AE00023C807 /* LoginController.swift */,
 				453D3373255AF4030023C807 /* SignUpController.swift */,
+				453D33B3255B4A3E0023C807 /* HomeController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			files = (
 				453D3374255AF4030023C807 /* SignUpController.swift in Sources */,
 				453D3378255B1BF80023C807 /* AuthButton.swift in Sources */,
+				453D33B4255B4A3E0023C807 /* HomeController.swift in Sources */,
 				453D334B255A28B90023C807 /* AppDelegate.swift in Sources */,
 				453D336C255A383A0023C807 /* Extensions.swift in Sources */,
 				453D3368255A2AE00023C807 /* LoginController.swift in Sources */,
