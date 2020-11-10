@@ -67,6 +67,25 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+       
+    }
+    
+    /*override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }*/
+    
+    // MARK: -  selectors
+    
+    @objc func handleShowSignUp(){
+        let controller = SignUpController()
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
+    // MARK: -  helper functions
+    
+    func configureUI(){
+        configureNavigationBar()
         
         view.backgroundColor = .backgroundColor
         
@@ -84,21 +103,16 @@ class LoginController: UIViewController {
         stack.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
                      paddingTop: 40,paddingLeft: 16, paddingRight: 16)
         
-        //
+        //button to create a new account
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
         dontHaveAccountButton.centerX(inView: view)
-       
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+    func configureNavigationBar(){
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.barStyle = .black
     }
-    
-    @objc func handleShowSignUp(){
-        
-    }
-
 
 }
 

@@ -14,6 +14,7 @@
 		453D3357255A28B90023C807 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 453D3355255A28B90023C807 /* LaunchScreen.storyboard */; };
 		453D3368255A2AE00023C807 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D3367255A2AE00023C807 /* LoginController.swift */; };
 		453D336C255A383A0023C807 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D336B255A383A0023C807 /* Extensions.swift */; };
+		453D3374255AF4030023C807 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D3373255AF4030023C807 /* SignUpController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		453D3358255A28B90023C807 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		453D3367255A2AE00023C807 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		453D336B255A383A0023C807 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		453D3373255AF4030023C807 /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				453D3367255A2AE00023C807 /* LoginController.swift */,
+				453D3373255AF4030023C807 /* SignUpController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				453D3374255AF4030023C807 /* SignUpController.swift in Sources */,
 				453D334B255A28B90023C807 /* AppDelegate.swift in Sources */,
 				453D336C255A383A0023C807 /* Extensions.swift in Sources */,
 				453D3368255A2AE00023C807 /* LoginController.swift in Sources */,
