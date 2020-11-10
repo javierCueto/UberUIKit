@@ -80,6 +80,7 @@ class LoginController: UIViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
     
+    
     @objc func handleLogin(){
         guard let email = emailTextField.text else { return }
         guard let password = passTextField.text else { return }
@@ -88,7 +89,13 @@ class LoginController: UIViewController {
                 print("Error \(error.localizedDescription)")
                 return
             }
-            print("succesfully logged user in ...")
+            
+            //self.dismiss(animated: true, completion: nil)
+            guard let controller = UIApplication.shared.keyWindow?.rootViewController as? HomeController else { return }
+            
+            controller.configureUI()
+            
+            self.dismiss(animated: true, completion: nil)
         }
     }
 
