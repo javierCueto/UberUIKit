@@ -19,41 +19,24 @@ class LoginController: UIViewController {
     }()
     
     private lazy var emailContainerView: UIView = {
-        let view = UIView()
-        
-        let imageView = UIImageView()
-        
-        imageView.image = UIImage(systemName: "envelope")
-        imageView.alpha = 0.87
-        view.addSubview(imageView)
-        imageView.centerY(inView: view)
-        imageView.anchor(left: view.leftAnchor, paddingLeft: 8, width: 24, height: 24)
-        imageView.tintColor = UIColor.white
-        
-        view.addSubview(emailTextField)
-        emailTextField.anchor(left: imageView.rightAnchor, bottom: view.bottomAnchor,
-                              right: view.rightAnchor, paddingLeft: 8,paddingBottom: 8)
-        emailTextField.centerY(inView: view)
-        
-        let separatorView = UIView()
-        separatorView.backgroundColor = .lightGray
-        view.addSubview(separatorView)
-        separatorView.anchor(left: view.leftAnchor,bottom: view.bottomAnchor,
-                             right: view.rightAnchor, paddingLeft: 8,height: 0.75)
-        
+        let view = UIView().inputContainerView(image: UIImage(systemName: "envelope")!, textField: emailTextField)
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return view
     }()
     
     private let emailTextField: UITextField = {
-        let tf = UITextField()
-        
-        tf.borderStyle = .none
-        tf.font = UIFont.systemFont(ofSize: 16)
-        tf.textColor = .white
-        tf.keyboardAppearance = .dark
-        tf.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
-        
-        return tf
+        return UITextField().textField(withPlaceHolder: "Email", isSecureTextEntry: false)
+    }()
+    
+    
+    private lazy var passContainerView: UIView = {
+        let view = UIView().inputContainerView(image: UIImage(systemName: "lock")!, textField: passTextField)
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        return view
+    }()
+    
+    private let passTextField: UITextField = {
+        return UITextField().textField(withPlaceHolder: "Password", isSecureTextEntry: false)
     }()
     // MARK: -  Lifecycle
     
@@ -67,9 +50,14 @@ class LoginController: UIViewController {
         titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor)
         titleLabel.centerX(inView: view)
         
-        view.addSubview(emailContainerView)
-        emailContainerView.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 40, paddingLeft: 16, paddingRight: 16, height: 50)
+        let stack = UIStackView(arrangedSubviews: [emailContainerView,passContainerView])
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.spacing = 16
+        view.addSubview(stack)
         
+        stack.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                     paddingTop: 40,paddingLeft: 16, paddingRight: 16)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
