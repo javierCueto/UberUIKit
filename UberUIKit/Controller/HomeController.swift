@@ -27,7 +27,7 @@ class HomeController: UIViewController{
     
     // MARK: -  API
     
-    func checkIfUserIsLoggedIn(){
+    /*func checkIfUserIsLoggedIn(){
         if Auth.auth().currentUser?.uid == nil {
             DispatchQueue.main.async {
                 let nav = UINavigationController(rootViewController: LoginController())
@@ -38,7 +38,7 @@ class HomeController: UIViewController{
         }else {
             configureUI()
         }
-    }
+    }*/
     
     func signOut(){
         do{
@@ -57,6 +57,12 @@ class HomeController: UIViewController{
         inputActivationView.centerX(inView: view)
         inputActivationView.setDimentions(height: 50, width: view.frame.width - 64)
         inputActivationView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        inputActivationView.alpha = 0
+        inputActivationView.delegate = self
+        
+        UIView.animate(withDuration: 2) {
+            self.inputActivationView.alpha = 1
+        }
         
     }
     
@@ -101,4 +107,13 @@ extension HomeController: CLLocationManagerDelegate{
             locationManager.requestAlwaysAuthorization()
         }
     }
+}
+
+
+extension HomeController: LocationInputActivationViewDelegate {
+    func presentLocationInputView() {
+        print(123)
+    }
+    
+    
 }
