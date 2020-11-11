@@ -13,13 +13,13 @@ class HomeController: UIViewController{
     
     // MARK: -  properties
     private let mapView = MKMapView()
+    private let locationManager = CLLocationManager()
     // MARK: -  lifycicle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         checkIfUserIsLoggedIn()
-        //signOut()
-        print("DEBUG: se inicio el home")
+        enableLocationServices()
     }
     
     // MARK: -  API
@@ -51,5 +51,38 @@ class HomeController: UIViewController{
     func configureUI(){
         view.addSubview(mapView)
         mapView.frame = view.frame
+    }
+}
+
+
+// MARK: -  location services
+extension HomeController: CLLocationManagerDelegate{
+    
+    func enableLocationServices(){
+        locationManager.delegate = self
+
+        switch CLLocationManager.authorizationStatus(){
+        
+        case .notDetermined:
+            print("DEBUG: Not determined")
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+           break
+        case .authorizedAlways:
+            print("DEBUG: auth always ...")
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        case .authorizedWhenInUse:
+            print("DEBUG: auth when in use")
+            locationManager.requestAlwaysAuthorization()
+        @unknown default:
+            break
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.requestAlwaysAuthorization()
+        }
     }
 }
