@@ -15,6 +15,7 @@ class HomeController: UIViewController{
     private let mapView = MKMapView()
     private let locationManager = CLLocationManager()
     private let inputActivationView = LocationInputActivation()
+    private let locationInputView = LocationInputView()
     // MARK: -  lifycicle
     
     override func viewDidLoad() {
@@ -60,7 +61,7 @@ class HomeController: UIViewController{
         inputActivationView.alpha = 0
         inputActivationView.delegate = self
         
-        UIView.animate(withDuration: 2) {
+        UIView.animate(withDuration: 0.3) {
             self.inputActivationView.alpha = 1
         }
         
@@ -69,10 +70,21 @@ class HomeController: UIViewController{
     func configureMapView(){
         view.addSubview(mapView)
         mapView.frame = view.frame
-        
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
-        
+    }
+    
+    func configureLocationInputView(){
+        locationInputView.delegate = self
+        view.addSubview(locationInputView)
+        locationInputView.anchor(top: view.topAnchor,left:  view.leftAnchor, right: view.rightAnchor, height: 200)
+        locationInputView.alpha = 0
+        UIView.animate(withDuration: 0.5) {
+            self.locationInputView.alpha = 1
+        } completion: { (_) in
+            print("hereee")
+        }
+
     }
 }
 
@@ -109,10 +121,28 @@ extension HomeController: CLLocationManagerDelegate{
     }
 }
 
-
+// MARK: -  location input activation delegate
 extension HomeController: LocationInputActivationViewDelegate {
     func presentLocationInputView() {
-        print(123)
+        inputActivationView.alpha = 0
+        configureLocationInputView()
+    }
+    
+    
+}
+
+// MARK: -  location input view delegate
+
+extension HomeController: LocationInputViewDelegate {
+    func dissmisLocationInpurView() {
+        UIView.animate(withDuration: 0.3) {
+            self.locationInputView.alpha = 0
+        } completion: { (_) in
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationView.alpha = 1
+            }
+        }
+
     }
     
     
