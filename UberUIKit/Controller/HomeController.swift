@@ -14,6 +14,7 @@ class HomeController: UIViewController{
     // MARK: -  properties
     private let mapView = MKMapView()
     private let locationManager = CLLocationManager()
+    private let inputActivationView = LocationInputActivation()
     // MARK: -  lifycicle
     
     override func viewDidLoad() {
@@ -50,6 +51,11 @@ class HomeController: UIViewController{
     
     func configureUI(){
         configureMapView()
+        view.addSubview(inputActivationView)
+        inputActivationView.centerX(inView: view)
+        inputActivationView.setDimentions(height: 50, width: view.frame.width - 64)
+        inputActivationView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        
     }
     
     func configureMapView(){
