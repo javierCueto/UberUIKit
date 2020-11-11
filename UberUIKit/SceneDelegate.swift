@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,7 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
-        window?.rootViewController = HomeController()//UINavigationController(rootViewController: LoginController())
+        
+        let currentUser = Auth.auth().currentUser
+        if currentUser != nil {
+            window?.rootViewController = HomeController()
+        }else{
+            window?.rootViewController = UINavigationController(rootViewController: LoginController())
+        }
+               
 
         
     }

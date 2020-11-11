@@ -73,7 +73,7 @@ class SignUpController: UIViewController {
     
     private lazy var accountTypeContainerView: UIView = {
         let view = UIView().inputContainerView(image: UIImage(systemName: "person.fill")!, segmentedControl: accountTypeSegmentedControl)
-        view.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
      
         return view
     }()
@@ -153,10 +153,10 @@ class SignUpController: UIViewController {
             "accountType" : accountTypeIndex] as [String : Any]
             
             Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, ref) in
-                //self.dismiss(animated: true, completion: nil)
-                guard let controller = UIApplication.shared.keyWindow?.rootViewController as? HomeController else { return }
-                controller.configureUI()
-                self.dismiss(animated: true, completion: nil)
+                // go to another view
+                let nav = HomeController()
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
             }
         }
     }

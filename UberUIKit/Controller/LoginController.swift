@@ -61,6 +61,8 @@ class LoginController: UIViewController {
         button.setAttributedTitle(attributedTitle, for: .normal)
         return button
     }()
+    
+    
     // MARK: -  Lifecycle
     
     override func viewDidLoad() {
@@ -90,12 +92,10 @@ class LoginController: UIViewController {
                 return
             }
             
-            //self.dismiss(animated: true, completion: nil)
-            guard let controller = UIApplication.shared.keyWindow?.rootViewController as? HomeController else { return }
-            
-            controller.configureUI()
-            
-            self.dismiss(animated: true, completion: nil)
+            // go to another view
+            let nav = HomeController()
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true, completion: nil)
         }
     }
 
@@ -112,7 +112,7 @@ class LoginController: UIViewController {
         titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor)
         titleLabel.centerX(inView: view)
         
-        // stack for inputs
+       // stack for inputs
         let stack = UIStackView(arrangedSubviews: [emailContainerView,passContainerView,loginButton])
         view.addSubview(stack)
         stack.axis = .vertical

@@ -19,8 +19,10 @@ class HomeController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkIfUserIsLoggedIn()
+        configureUI()
+        //checkIfUserIsLoggedIn()
         enableLocationServices()
+        //signOut()
     }
     
     // MARK: -  API
