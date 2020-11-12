@@ -22,6 +22,7 @@ class HomeController: UIViewController{
     private let tableView = UITableView()
     
     private final let locationInputViewHeight = 200
+
     // MARK: -  lifycicle
     
     override func viewDidLoad() {
@@ -29,23 +30,15 @@ class HomeController: UIViewController{
         configureUI()
         //checkIfUserIsLoggedIn()
         enableLocationServices()
+        fechUserData()
         //signOut()
     }
     
     // MARK: -  API
-    
-    /*func checkIfUserIsLoggedIn(){
-        if Auth.auth().currentUser?.uid == nil {
-            DispatchQueue.main.async {
-                let nav = UINavigationController(rootViewController: LoginController())
-                nav.modalPresentationStyle = .fullScreen
-                self.present(nav, animated: true, completion: nil)
-            }
-  
-        }else {
-            configureUI()
-        }
-    }*/
+    func fechUserData(){
+        Service.shared.fetchUserData()
+    }
+
     
     func signOut(){
         do{
