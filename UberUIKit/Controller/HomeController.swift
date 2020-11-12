@@ -22,6 +22,12 @@ class HomeController: UIViewController{
     private let tableView = UITableView()
     
     private final let locationInputViewHeight = 200
+    
+    private var fullname: String? {
+        didSet{
+            locationInputView.titleLabel.text = fullname
+        }
+    }
 
     // MARK: -  lifycicle
     
@@ -36,7 +42,9 @@ class HomeController: UIViewController{
     
     // MARK: -  API
     func fechUserData(){
-        Service.shared.fetchUserData()
+        Service.shared.fetchUserData { (fullname) in
+            self.fullname = fullname
+        }
     }
 
     
