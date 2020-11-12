@@ -13,6 +13,12 @@ protocol LocationInputViewDelegate: class{
 
 class LocationInputView: UIView {
     // MARK: -  properties
+    var user: User? {
+        didSet{
+            titleLabel.text = user?.fullname
+        }
+    }
+    
     weak var delegate: LocationInputViewDelegate?
     
     private let backButton: UIButton = {
@@ -22,7 +28,7 @@ class LocationInputView: UIView {
         return button
     }()
     
-    var titleLabel: UILabel = {
+    private var titleLabel: UILabel = {
        let label = UILabel()
         label.text = "loading ..."
         label.textColor = .darkGray

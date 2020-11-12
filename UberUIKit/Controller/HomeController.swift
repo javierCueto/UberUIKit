@@ -23,9 +23,9 @@ class HomeController: UIViewController{
     
     private final let locationInputViewHeight = 200
     
-    private var fullname: String? {
+    private var user: User? {
         didSet{
-            locationInputView.titleLabel.text = fullname
+            locationInputView.user = user
         }
     }
 
@@ -42,8 +42,8 @@ class HomeController: UIViewController{
     
     // MARK: -  API
     func fechUserData(){
-        Service.shared.fetchUserData { (fullname) in
-            self.fullname = fullname
+        Service.shared.fetchUserData { (user) in
+            self.user = user
         }
     }
 
