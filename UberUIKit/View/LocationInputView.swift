@@ -8,7 +8,7 @@
 import UIKit
 
 protocol LocationInputViewDelegate: class{
-    func dissmisLocationInpurView()
+    func dissmisLocationInputView()
     func executeSearch(query: String)
 }
 
@@ -129,7 +129,7 @@ class LocationInputView: UIView {
     // MARK: -  selectors
     
     @objc func handleBackTapped(){
-        delegate?.dissmisLocationInpurView()
+        delegate?.dissmisLocationInputView()
     }
 }
 

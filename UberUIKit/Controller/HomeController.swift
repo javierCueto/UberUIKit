@@ -140,6 +140,21 @@ class HomeController: UIViewController{
         
         view.addSubview(tableView)
     }
+    
+    
+    func dissmisLocationView(completion: ((Bool) -> Void)? = nil){
+
+        
+        UIView.animate(withDuration: 0.3, animations:  {
+            self.locationInputView.alpha = 0
+            self.tableView.frame.origin.y = self.view.frame.height
+            self.locationInputView.removeFromSuperview()
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationView.alpha = 1
+            }
+        }, completion: completion)
+
+    }
 }
 
 
@@ -227,20 +242,8 @@ extension HomeController: LocationInputViewDelegate {
         }
     }
     
-    func dissmisLocationInpurView() {
-        
-        UIView.animate(withDuration: 0.3) {
-            self.locationInputView.alpha = 0
-            self.tableView.frame.origin.y = self.view.frame.height
-
-          
-        } completion: { (_) in
-            self.locationInputView.removeFromSuperview()
-            UIView.animate(withDuration: 0.3) {
-                self.inputActivationView.alpha = 1
-
-            }
-        }
+    func dissmisLocationInputView() {
+        dissmisLocationView()
 
     }
     
@@ -265,10 +268,22 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIndentifier, for: indexPath) as! LocationCell
-        //cell.titleLabelText = searchResults[indexPath.row].title
-        //cell.addressLabelText = searchResults[indexPath.row].subtitle
+        if indexPath.section == 1 {
+            cell.titleLabelText = searchResults[indexPath.row].name
+            cell.addressLabelText = searchResults[indexPath.row].address
+        }
+   
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlacemark = searchResults[indexPath.row]
+        dissmisLocationView { (_) in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = selectedPlacemark.coordinate
+            self.mapView.addAnnotation(annotation)
+            self.mapView.selectAnnotation(annotation, animated: true)
+        }
+    }
     
 }
