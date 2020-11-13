@@ -8,6 +8,19 @@
 import UIKit
 
 class LocationCell: UITableViewCell {
+    
+    var titleLabelText: String? {
+        didSet{
+            titleLabel.text = titleLabelText
+        }
+    }
+    
+    var addressLabelText: String? {
+        didSet{
+            addressLabel.text = addressLabelText
+        }
+    }
+        
 
     // MARK: -  properties
     private let titleLabel: UILabel = {

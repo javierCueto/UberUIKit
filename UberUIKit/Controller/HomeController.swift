@@ -19,6 +19,7 @@ class HomeController: UIViewController{
     private let locationManager = LocationHandler.shared.locationManager
     private let inputActivationView = LocationInputActivation()
     private let locationInputView = LocationInputView()
+    private var searchResults = [MKPlacemark]()
     
     private let tableView = UITableView()
     
@@ -35,7 +36,6 @@ class HomeController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        //checkIfUserIsLoggedIn()
         enableLocationServices()
         fechUserData()
         fetchDrivers()
@@ -143,6 +143,30 @@ class HomeController: UIViewController{
 }
 
 
+// MARK: -  map helper functions
+
+private extension HomeController{
+    func searchBy(naturalLanguajeQuery: String , completion: @escaping([MKPlacemark]) -> Void){
+        var results = [MKPlacemark]()
+        let request = MKLocalSearch.Request()
+        
+        request.region = mapView.region
+        
+        request.naturalLanguageQuery = naturalLanguajeQuery
+        
+        let search = MKLocalSearch(request: request)
+        
+        search.start { (response, error) in
+            guard let response = response else {return}
+            response.mapItems.forEach { (item) in
+                results.append(item.placemark)
+            }
+            
+            completion(results)
+        }
+    }
+}
+
 // MARK: - MKMapViewDelegate
 extension HomeController: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -196,6 +220,13 @@ extension HomeController: LocationInputActivationViewDelegate {
 // MARK: -  location input view delegate
 
 extension HomeController: LocationInputViewDelegate {
+    func executeSearch(query: String) {
+        searchBy(naturalLanguajeQuery: query) { (placemarks) in
+            self.searchResults = placemarks
+            self.tableView.reloadData()
+        }
+    }
+    
     func dissmisLocationInpurView() {
         
         UIView.animate(withDuration: 0.3) {
@@ -229,12 +260,13 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 2 : 5
+        return section == 0 ? 2 : searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIndentifier, for: indexPath) as! LocationCell
-        
+        //cell.titleLabelText = searchResults[indexPath.row].title
+        //cell.addressLabelText = searchResults[indexPath.row].subtitle
         return cell
     }
     
