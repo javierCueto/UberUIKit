@@ -12,6 +12,15 @@ import MapKit
 private let reuseIndentifier = "LocationCell"
 private let annotationIdentifier = "DriverAnnotation"
 
+private enum ActionButtonConfiguration{
+    case showMenu
+    case dismissActionView
+    
+    init(){
+        self = .showMenu
+    }
+}
+
 class HomeController: UIViewController{
     
     // MARK: -  properties
@@ -20,6 +29,7 @@ class HomeController: UIViewController{
     private let inputActivationView = LocationInputActivation()
     private let locationInputView = LocationInputView()
     private var searchResults = [MKPlacemark]()
+    private var actionButtonConfig = ActionButtonConfiguration()
     
     private let tableView = UITableView()
     
@@ -30,6 +40,13 @@ class HomeController: UIViewController{
             locationInputView.user = user
         }
     }
+    
+    private let actionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "menu_icon").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(acctionButtonPressed), for: .touchUpInside)
+        return button
+    }()
 
     // MARK: -  lifycicle
     
@@ -90,10 +107,13 @@ class HomeController: UIViewController{
     
     func configureUI(){
         configureMapView()
+        view.addSubview(actionButton)
+        actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingTop: 16, paddingLeft: 20, width: 30, height: 30)
+        
         view.addSubview(inputActivationView)
         inputActivationView.centerX(inView: view)
         inputActivationView.setDimentions(height: 50, width: view.frame.width - 64)
-        inputActivationView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        inputActivationView.anchor(top: actionButton.bottomAnchor, paddingTop: 32)
         inputActivationView.alpha = 0
         inputActivationView.delegate = self
         
@@ -143,21 +163,33 @@ class HomeController: UIViewController{
     
     
     func dissmisLocationView(completion: ((Bool) -> Void)? = nil){
-
-        
         UIView.animate(withDuration: 0.3, animations:  {
             self.locationInputView.alpha = 0
             self.tableView.frame.origin.y = self.view.frame.height
             self.locationInputView.removeFromSuperview()
-            UIView.animate(withDuration: 0.3) {
-                self.inputActivationView.alpha = 1
-            }
+            
         }, completion: completion)
 
     }
 }
 
-
+// MARK: -  #selectors
+extension HomeController{
+    @objc func acctionButtonPressed(){
+        switch actionButtonConfig {
+        
+        case .showMenu:
+            print("menu")
+        case .dismissActionView:
+            print("hide view")
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationView.alpha = 1
+                self.actionButton.setImage(#imageLiteral(resourceName: "menu_icon").withRenderingMode(.alwaysOriginal), for: .normal)
+                self.actionButtonConfig = .showMenu
+            }
+        }
+    }
+}
 // MARK: -  map helper functions
 
 private extension HomeController{
@@ -243,7 +275,11 @@ extension HomeController: LocationInputViewDelegate {
     }
     
     func dissmisLocationInputView() {
-        dissmisLocationView()
+        dissmisLocationView { (_) in
+            UIView.animate(withDuration: 0.3) {
+                self.inputActivationView.alpha = 1
+            }
+        }
 
     }
     
@@ -278,6 +314,9 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedPlacemark = searchResults[indexPath.row]
+        actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp").withRenderingMode(.alwaysOriginal), for: .normal)
+        actionButtonConfig = .dismissActionView
+        
         dissmisLocationView { (_) in
             let annotation = MKPointAnnotation()
             annotation.coordinate = selectedPlacemark.coordinate
