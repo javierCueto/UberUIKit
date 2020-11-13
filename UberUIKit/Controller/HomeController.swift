@@ -105,6 +105,19 @@ class HomeController: UIViewController{
     
     // MARK: -  helper functions
     
+    private func configureActionButton(config: ActionButtonConfiguration){
+        switch config {
+            case .showMenu:
+                actionButton.setImage(#imageLiteral(resourceName: "menu_icon").withRenderingMode(.alwaysOriginal), for: .normal)
+                actionButtonConfig = .showMenu
+                
+            case .dismissActionView:
+                actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp").withRenderingMode(.alwaysOriginal), for: .normal)
+                actionButtonConfig = .dismissActionView
+            
+        }
+    }
+    
     func configureUI(){
         configureMapView()
         view.addSubview(actionButton)
@@ -181,11 +194,18 @@ extension HomeController{
         case .showMenu:
             print("menu")
         case .dismissActionView:
-            print("hide view")
+            mapView.annotations.forEach { (annotation) in
+                
+                if let anno = annotation as? MKPointAnnotation{
+                        self.mapView.removeAnnotation(anno)
+                }
+                
+            }
+            
             UIView.animate(withDuration: 0.3) {
                 self.inputActivationView.alpha = 1
-                self.actionButton.setImage(#imageLiteral(resourceName: "menu_icon").withRenderingMode(.alwaysOriginal), for: .normal)
-                self.actionButtonConfig = .showMenu
+                self.configureActionButton(config: .showMenu)
+                
             }
         }
     }
@@ -314,9 +334,7 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedPlacemark = searchResults[indexPath.row]
-        actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp").withRenderingMode(.alwaysOriginal), for: .normal)
-        actionButtonConfig = .dismissActionView
-        
+        configureActionButton(config: .dismissActionView)
         dissmisLocationView { (_) in
             let annotation = MKPointAnnotation()
             annotation.coordinate = selectedPlacemark.coordinate
