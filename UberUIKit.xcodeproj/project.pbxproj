@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3351D00C77B1B7B0FAAB2051 /* Pods_UberUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E09BC0D16916C919087E91 /* Pods_UberUIKit.framework */; };
+		45187B1F255E364800590FF7 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45187B1E255E364800590FF7 /* LocationHandler.swift */; };
 		451FCBB6255C9BE900E76A63 /* LocationInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FCBB5255C9BE900E76A63 /* LocationInputView.swift */; };
 		451FCBB9255D8D4200E76A63 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FCBB8255D8D4200E76A63 /* LocationCell.swift */; };
 		451FCBBD255DA60C00E76A63 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FCBBC255DA60C00E76A63 /* Service.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		36E09BC0D16916C919087E91 /* Pods_UberUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UberUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		45187B1E255E364800590FF7 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		451FCBB5255C9BE900E76A63 /* LocationInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputView.swift; sourceTree = "<group>"; };
 		451FCBB8255D8D4200E76A63 /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		451FCBBC255DA60C00E76A63 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				453D336B255A383A0023C807 /* Extensions.swift */,
+				45187B1E255E364800590FF7 /* LocationHandler.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				453D334B255A28B90023C807 /* AppDelegate.swift in Sources */,
 				453D336C255A383A0023C807 /* Extensions.swift in Sources */,
 				453D3368255A2AE00023C807 /* LoginController.swift in Sources */,
+				45187B1F255E364800590FF7 /* LocationHandler.swift in Sources */,
 				453D33B7255B67360023C807 /* LocationInputActivationView.swift in Sources */,
 				451FCBC0255DB38F00E76A63 /* User.swift in Sources */,
 				451FCBBD255DA60C00E76A63 /* Service.swift in Sources */,

@@ -15,7 +15,7 @@ class HomeController: UIViewController{
     
     // MARK: -  properties
     private let mapView = MKMapView()
-    private let locationManager = CLLocationManager()
+    private let locationManager = LocationHandler.shared.locationManager
     private let inputActivationView = LocationInputActivation()
     private let locationInputView = LocationInputView()
     
@@ -37,7 +37,7 @@ class HomeController: UIViewController{
         //checkIfUserIsLoggedIn()
         enableLocationServices()
         fechUserData()
-        //signOut()
+        signOut()
     }
     
     // MARK: -  API
@@ -117,32 +117,26 @@ class HomeController: UIViewController{
 extension HomeController: CLLocationManagerDelegate{
     
     func enableLocationServices(){
-        locationManager.delegate = self
-
         switch CLLocationManager.authorizationStatus(){
         
         case .notDetermined:
             print("DEBUG: Not determined")
-            locationManager.requestWhenInUseAuthorization()
+            locationManager?.requestWhenInUseAuthorization()
         case .restricted, .denied:
            break
         case .authorizedAlways:
             print("DEBUG: auth always ...")
-            locationManager.startUpdatingLocation()
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager?.startUpdatingLocation()
+            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         case .authorizedWhenInUse:
             print("DEBUG: auth when in use")
-            locationManager.requestAlwaysAuthorization()
+            locationManager?.requestAlwaysAuthorization()
         @unknown default:
             break
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            locationManager.requestAlwaysAuthorization()
-        }
-    }
+   
 }
 
 // MARK: -  location input activation delegate

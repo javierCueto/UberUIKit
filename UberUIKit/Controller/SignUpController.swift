@@ -7,9 +7,12 @@
 
 import UIKit
 import Firebase
+import GeoFire
 
 class SignUpController: UIViewController {
     // MARK: -  properties
+    
+    private var location = LocationHandler.shared.locationManager.location
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "UBER"
@@ -98,6 +101,8 @@ class SignUpController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        
+        //print("DEBUG: localizacion actual \(location)")
     }
     
     
@@ -152,12 +157,29 @@ class SignUpController: UIViewController {
                           "fullname" : fullName,
             "accountType" : accountTypeIndex] as [String : Any]
             
-            Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, ref) in
-                // go to another view
-                let nav = HomeController()
-                nav.modalPresentationStyle = .fullScreen
-                self.present(nav, animated: true, completion: nil)
+            
+            if accountTypeIndex == 1{
+                let geofire = GeoFire(firebaseRef: REF_DRIVER_LOCATIONS)
+                guard let location = self.location else { return }
+                geofire.setLocation(location, forKey: uid) { (error) in
+                    self.uploadUserDataAndShowHomeController(uid: uid, values: values)
+                }
+                
             }
+            
+            self.uploadUserDataAndShowHomeController(uid: uid, values: values)
+ 
+           
+        }
+    }
+    
+    // MARK: -  helper functions
+    func uploadUserDataAndShowHomeController(uid: String, values: [String: Any]){
+        REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
+            // go to another view
+            let nav = HomeController()
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true, completion: nil)
         }
     }
 
