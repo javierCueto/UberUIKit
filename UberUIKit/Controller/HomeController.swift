@@ -190,10 +190,14 @@ class HomeController: UIViewController{
 
     }
     
-    func animateRideActionVIew(shouldShow: Bool){
+    func animateRideActionVIew(shouldShow: Bool, destination: MKPlacemark? = nil){
             
         
         let yOrigin = shouldShow ? self.view.frame.height - CGFloat(self.rideActionViewHeight) : self.view.frame.height
+        if shouldShow {
+            guard let destination = destination else { return }
+            rideActionView.destination = destination
+        }
         
         UIView.animate(withDuration: 0.3) {
             self.rideActionView.frame.origin.y = yOrigin
@@ -406,8 +410,9 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate{
             
             self.mapView.showAnnotations(annotations, animated: true)
             
-            self.animateRideActionVIew(shouldShow: true)
+            self.animateRideActionVIew(shouldShow: true,destination: selectedPlacemark)
             
+
         }
         
         
