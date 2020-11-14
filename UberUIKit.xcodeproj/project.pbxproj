@@ -26,6 +26,7 @@
 		453D337B255B254D0023C807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 453D337A255B254D0023C807 /* GoogleService-Info.plist */; };
 		453D33B4255B4A3E0023C807 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D33B3255B4A3E0023C807 /* HomeController.swift */; };
 		453D33B7255B67360023C807 /* LocationInputActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D33B6255B67360023C807 /* LocationInputActivationView.swift */; };
+		45984A0B2560322300FBA1DC /* RideActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45984A0A2560322300FBA1DC /* RideActionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		453D337A255B254D0023C807 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		453D33B3255B4A3E0023C807 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		453D33B6255B67360023C807 /* LocationInputActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputActivationView.swift; sourceTree = "<group>"; };
+		45984A0A2560322300FBA1DC /* RideActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideActionView.swift; sourceTree = "<group>"; };
 		4AA2E1BBFD06DFCD7CC7399E /* Pods-UberUIKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UberUIKit.release.xcconfig"; path = "Target Support Files/Pods-UberUIKit/Pods-UberUIKit.release.xcconfig"; sourceTree = "<group>"; };
 		AACA1591F8F0DBCD3BB216AF /* Pods-UberUIKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UberUIKit.debug.xcconfig"; path = "Target Support Files/Pods-UberUIKit/Pods-UberUIKit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +111,7 @@
 				453D33B6255B67360023C807 /* LocationInputActivationView.swift */,
 				451FCBB5255C9BE900E76A63 /* LocationInputView.swift */,
 				451FCBB8255D8D4200E76A63 /* LocationCell.swift */,
+				45984A0A2560322300FBA1DC /* RideActionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				453D3368255A2AE00023C807 /* LoginController.swift in Sources */,
 				45187B1F255E364800590FF7 /* LocationHandler.swift in Sources */,
 				453D33B7255B67360023C807 /* LocationInputActivationView.swift in Sources */,
+				45984A0B2560322300FBA1DC /* RideActionView.swift in Sources */,
 				451FCBC0255DB38F00E76A63 /* User.swift in Sources */,
 				451FCBBD255DA60C00E76A63 /* Service.swift in Sources */,
 				453D334D255A28B90023C807 /* SceneDelegate.swift in Sources */,
