@@ -51,6 +51,7 @@ class HomeController: UIViewController{
             let controller = PickupController(trip: trip)
             controller.modalPresentationStyle = .fullScreen
             self.present(controller, animated: true, completion: nil)
+            controller.delegate = self
         
         }
     }
@@ -71,6 +72,12 @@ class HomeController: UIViewController{
         fechUserData()
        // fetchDrivers()
         //signOut()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let trip = trip else { return }
+        
+        print("DEBUG: trip state is \(trip.state)")
     }
     
     // MARK: -  API
@@ -474,7 +481,15 @@ extension HomeController: RideActionViewDelegate{
             print("DEBUG: ride confirmed")
         }
     }
-    
+}
 
+// MARK: -  pickupControllerDelegate
+extension HomeController: PickupControllerDelegate {
+    func didAcceptTrip(_ trip: Trip) {
+        self.trip?.state = .accepted
+        print("here para cerrar la ventana")
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
 }

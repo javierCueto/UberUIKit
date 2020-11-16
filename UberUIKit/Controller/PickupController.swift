@@ -8,11 +8,17 @@
 import UIKit
 import MapKit
 
+protocol  PickupControllerDelegate: class {
+    func didAcceptTrip (_ trip: Trip)
+}
+
 class PickupController: UIViewController {
     
     // MARK: -  properties
     private let mapview = MKMapView()
     let trip: Trip
+    
+    weak var delegate: PickupControllerDelegate?
     
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
@@ -32,7 +38,7 @@ class PickupController: UIViewController {
     
     private let accepTripButton: UIButton = {
         let button = UIButton(type: .system)
-        button.addTarget(self, action: #selector(handleTrip), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleAcceptTrip), for: .touchUpInside)
         button.backgroundColor = .white
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.setTitleColor(.black, for: .normal)
@@ -68,8 +74,11 @@ class PickupController: UIViewController {
     }
     
     
-    @objc func handleTrip(){
-        dismiss(animated: true, completion: nil)
+    @objc func handleAcceptTrip(){
+        Service.shared.acceptTrip(trip: trip) { (error, ref) in
+            //self.delegate
+            self.delegate?.didAcceptTrip(self.trip)
+        }
     }
     // MARK: -  API
     
