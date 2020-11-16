@@ -15,6 +15,7 @@
 		451FCBBD255DA60C00E76A63 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FCBBC255DA60C00E76A63 /* Service.swift */; };
 		451FCBC0255DB38F00E76A63 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FCBBF255DB38F00E76A63 /* User.swift */; };
 		4528B24E2562DBCF00AC4D1C /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528B24D2562DBCF00AC4D1C /* Trip.swift */; };
+		4528B2632562FD5F00AC4D1C /* PickupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528B2622562FD5F00AC4D1C /* PickupController.swift */; };
 		453D334B255A28B90023C807 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D334A255A28B90023C807 /* AppDelegate.swift */; };
 		453D334D255A28B90023C807 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D334C255A28B90023C807 /* SceneDelegate.swift */; };
 		453D3352255A28B90023C807 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 453D3350255A28B90023C807 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 		451FCBBC255DA60C00E76A63 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		451FCBBF255DB38F00E76A63 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4528B24D2562DBCF00AC4D1C /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		4528B2622562FD5F00AC4D1C /* PickupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupController.swift; sourceTree = "<group>"; };
 		453D3347255A28B90023C807 /* UberUIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UberUIKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		453D334A255A28B90023C807 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		453D334C255A28B90023C807 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				453D3367255A2AE00023C807 /* LoginController.swift */,
 				453D3373255AF4030023C807 /* SignUpController.swift */,
 				453D33B3255B4A3E0023C807 /* HomeController.swift */,
+				4528B2622562FD5F00AC4D1C /* PickupController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				453D33B4255B4A3E0023C807 /* HomeController.swift in Sources */,
 				451FCBB6255C9BE900E76A63 /* LocationInputView.swift in Sources */,
 				4528B24E2562DBCF00AC4D1C /* Trip.swift in Sources */,
+				4528B2632562FD5F00AC4D1C /* PickupController.swift in Sources */,
 				45187B22255EC34800590FF7 /* DriverAnnotation.swift in Sources */,
 				453D334B255A28B90023C807 /* AppDelegate.swift in Sources */,
 				453D336C255A383A0023C807 /* Extensions.swift in Sources */,
