@@ -163,6 +163,7 @@ class HomeController: UIViewController{
     }
     
     func configureRideActionView(){
+        rideActionView.delegate = self
         view.addSubview(rideActionView)
         rideActionView.frame = CGRect(x: 0, y: view.frame.height , width: view.frame.width, height: CGFloat(self.rideActionViewHeight))
     }
@@ -419,5 +420,29 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate{
         
         
     }
+    
+}
+
+
+extension HomeController: RideActionViewDelegate{
+    func uploadTrip(_ view: RideActionView) {
+        guard  let pickupCoordinates = locationManager?.location?.coordinate else {
+            return
+        }
+        
+        guard  let destinationCoordinates = view.destination?.location?.coordinate else {
+            return
+        }
+        
+        Service.shared.uploadTrip(pickupCoordinates, destinationCoordinates) { (error, ref) in
+            if let error = error {
+                print("DEBUG: error in confirm UBERX \(error.localizedDescription)")
+            }
+            
+            print("DEBUG: ride confirmed")
+        }
+    }
+    
+
     
 }
