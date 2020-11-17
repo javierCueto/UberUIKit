@@ -508,8 +508,17 @@ extension HomeController: RideActionViewDelegate{
 // MARK: -  pickupControllerDelegate
 extension HomeController: PickupControllerDelegate {
     func didAcceptTrip(_ trip: Trip) {
-        self.trip?.state = .accepted
-        print("here para cerrar la ventana")
+        //self.trip?.state = .accepted
+        let anno = MKPointAnnotation()
+        anno.coordinate = trip.pickupCoordinates
+        mapView.addAnnotation(anno)
+        mapView.selectAnnotation(anno, animated: true)
+        
+        let placeMark = MKPlacemark(coordinate: trip.pickupCoordinates)
+        let mapItem = MKMapItem(placemark: placeMark)
+        generatePolyline(toDestination: mapItem)
+        
+        mapView.zoomFit(annotations: mapView.annotations)
         self.dismiss(animated: true, completion: nil)
     }
     
