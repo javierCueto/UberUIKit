@@ -473,12 +473,16 @@ extension HomeController: RideActionViewDelegate{
             return
         }
         
+        shouldPresentLoadingView(true, message: "Finding you a ride ...")
         Service.shared.uploadTrip(pickupCoordinates, destinationCoordinates) { (error, ref) in
             if let error = error {
                 print("DEBUG: error in confirm UBERX \(error.localizedDescription)")
             }
             
-            print("DEBUG: ride confirmed")
+            UIView.animate(withDuration: 0.3) {
+                self.rideActionView.frame.origin.y = self.view.frame.height
+            }
+            
         }
     }
 }
