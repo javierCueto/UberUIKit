@@ -248,18 +248,21 @@ class HomeController: UIViewController{
 
     }
     
-    func animateRideActionVIew(shouldShow: Bool, destination: MKPlacemark? = nil){
-            
-        
+    func animateRideActionVIew(shouldShow: Bool, destination: MKPlacemark? = nil, config: RideActionViewConfiguration? = nil){
         let yOrigin = shouldShow ? self.view.frame.height - CGFloat(self.rideActionViewHeight) : self.view.frame.height
-        if shouldShow {
-            guard let destination = destination else { return }
-            rideActionView.destination = destination
-        }
         
         UIView.animate(withDuration: 0.3) {
             self.rideActionView.frame.origin.y = yOrigin
         }
+        
+        if shouldShow {
+            guard let config = config else { return }
+            rideActionView.configureUI(withCOnfig: config)
+            guard let destination = destination else { return }
+            rideActionView.destination = destination
+        }
+        
+      
         
     }
 }
@@ -519,7 +522,12 @@ extension HomeController: PickupControllerDelegate {
         generatePolyline(toDestination: mapItem)
         
         mapView.zoomFit(annotations: mapView.annotations)
-        self.dismiss(animated: true, completion: nil)
+        
+        
+        
+        self.dismiss(animated: true){
+            self.animateRideActionVIew(shouldShow: true, config: .tripAccepted)
+        }
     }
     
     

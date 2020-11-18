@@ -70,7 +70,6 @@ class RideActionView: UIView {
         let label = UILabel()
         //label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "direction here"
         label.textAlignment = .center
         return label
     }()
@@ -79,7 +78,6 @@ class RideActionView: UIView {
         let label = UILabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 16)
-        label.text = "direction here"
         label.textAlignment = .center
         return label
     }()
@@ -173,6 +171,21 @@ class RideActionView: UIView {
     
     // MARK: -  helper functions
     func configureUI(withCOnfig config: RideActionViewConfiguration){
+        switch config {
+        case .requestRide:
+            break
+        case .tripAccepted:
+            titleLabel.text = "En route to Passsenger"
+            buttonAction = .getDirections
+            actionButton.setTitle(buttonAction.description, for: .normal)
+            break
+        case .pickupPassenger:
+            break
+        case .tripInProgress:
+            break
+        case .endTrip:
+            break
+        }
         
     }
     
