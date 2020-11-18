@@ -88,20 +88,25 @@ class RideActionView: UIView {
        let view = UIView()
         view.backgroundColor = .black
         
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 30)
-        label.textColor = .white
-        label.text = "X"
+
         
-        view.addSubview(label)
+        view.addSubview(infoViewLabel)
         
-        label.centerY(inView: view)
-        label.centerX(inView: view)
+        infoViewLabel.centerY(inView: view)
+        infoViewLabel.centerX(inView: view)
         
         return view
     }()
     
-    private let uberXLabel: UILabel = {
+    private let infoViewLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 30)
+        label.textColor = .white
+        label.text = "X"
+        return label
+    }()
+    
+    private let uberInfLabel: UILabel = {
         let label = UILabel()
         //label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 18)
@@ -144,16 +149,16 @@ class RideActionView: UIView {
         infoView.setDimentions(height: 60, width: 60)
         infoView.layer.cornerRadius = 60 / 2
         
-        addSubview(uberXLabel)
-        uberXLabel.anchor(top: infoView.bottomAnchor,paddingTop: 8)
-        uberXLabel.centerX(inView: self)
+        addSubview(uberInfLabel)
+        uberInfLabel.anchor(top: infoView.bottomAnchor,paddingTop: 8)
+        uberInfLabel.centerX(inView: self)
         
         let separatorView = UIView()
         separatorView.backgroundColor = .lightGray
         
         addSubview(separatorView)
         
-        separatorView.anchor(top: uberXLabel.bottomAnchor,left: leftAnchor, right: rightAnchor, paddingTop: 4, height: 0.75)
+        separatorView.anchor(top: uberInfLabel.bottomAnchor,left: leftAnchor, right: rightAnchor, paddingTop: 4, height: 0.75)
         
         addSubview(actionButton)
         actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
@@ -167,7 +172,19 @@ class RideActionView: UIView {
     // MARK: -  selector
     
     @objc func actionButtonPressed(){
-        delegate?.uploadTrip(self)
+        switch  buttonAction {
+        case .requestRide:
+            delegate?.uploadTrip(self)
+        case .cancel:
+            print("DEBUG: handle cancel ...")
+        case .getDirections:
+            print("DEBUG: handle getDirecions ...")
+        case .pickup:
+            print("DEBUG: handle pickup ...")
+        case .dropOff:
+            print("DEBUG: handle dropOff ...")
+        }
+        
     }
     
     
@@ -192,13 +209,34 @@ class RideActionView: UIView {
                 titleLabel.text = "Driver en Route"
             }
             
+            infoViewLabel.text = String(user.fullname.first ?? "X")
+            uberInfLabel.text = user.fullname
             
         case .pickupPassenger:
-            break
+            titleLabel.text = "Arraived at passenger Location"
+            buttonAction = .pickup
+            actionButton.setTitle(buttonAction.description, for: .normal)
         case .tripInProgress:
-            break
+            guard let user = user else {return}
+            if user.accountType == .driver{
+                actionButton.setTitle("TRIP EN PROGRESS", for: .normal)
+                actionButton.isEnabled = false
+            }else{
+                buttonAction = .getDirections
+                actionButton.setTitle(buttonAction.description, for: .normal)
+            }
+            
+            titleLabel.text = "En route to destination"
+            
         case .endTrip:
-            break
+            guard let user = user else {return}
+            if user.accountType == .driver {
+                actionButton.setTitle("ARRIVET AT DESTINATION", for: .normal)
+                actionButton.isEnabled = false
+            }else {
+                buttonAction = .dropOff
+                actionButton.setTitle(buttonAction.description, for: .normal)
+            }
         }
         
     }
