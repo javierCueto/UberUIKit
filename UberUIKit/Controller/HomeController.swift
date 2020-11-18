@@ -84,7 +84,6 @@ class HomeController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         guard let trip = trip else { return }
         
-        print("DEBUG: trip state is \(trip.state)")
     }
     
     // MARK: -  API
@@ -95,6 +94,14 @@ class HomeController: UIViewController{
             
             if trip.state == .accepted {
                 self.shouldPresentLoadingView(false)
+                
+                guard let driverUid = trip.driverUid else { return }
+                
+                Service.shared.fetchUserData(uid: driverUid) { (driver) in
+                    self.animateRideActionVIew(shouldShow: true, config: .tripAccepted, user: driver)
+                }
+                
+                
             }
         }
     }
@@ -248,7 +255,8 @@ class HomeController: UIViewController{
 
     }
     
-    func animateRideActionVIew(shouldShow: Bool, destination: MKPlacemark? = nil, config: RideActionViewConfiguration? = nil){
+    func animateRideActionVIew(shouldShow: Bool, destination: MKPlacemark? = nil, config: RideActionViewConfiguration? = nil, user: User? = nil){
+        
         let yOrigin = shouldShow ? self.view.frame.height - CGFloat(self.rideActionViewHeight) : self.view.frame.height
         
         UIView.animate(withDuration: 0.3) {
@@ -257,9 +265,17 @@ class HomeController: UIViewController{
         
         if shouldShow {
             guard let config = config else { return }
+            
+            if let destination = destination {
+                rideActionView.destination = destination
+            }
+            
+            if let user = user {
+                rideActionView.user = user
+            }
+            
             rideActionView.configureUI(withCOnfig: config)
-            guard let destination = destination else { return }
-            rideActionView.destination = destination
+           
         }
         
       
@@ -452,14 +468,14 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedPlacemark = searchResults[indexPath.row]
+
         configureActionButton(config: .dismissActionView)
 
         
         let destination = MKMapItem(placemark: selectedPlacemark)
         generatePolyline(toDestination: destination)
         
-        print(destination,"_________________")
-        
+
         dissmisLocationView { (_) in
             let annotation = MKPointAnnotation()
             annotation.coordinate = selectedPlacemark.coordinate
@@ -471,7 +487,7 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate{
             
             self.mapView.zoomFit(annotations: annotations)
             
-            self.animateRideActionVIew(shouldShow: true,destination: selectedPlacemark)
+            self.animateRideActionVIew(shouldShow: true,destination: selectedPlacemark,config: .requestRide)
             
 
         }
@@ -486,15 +502,19 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate{
 
 extension HomeController: RideActionViewDelegate{
     func uploadTrip(_ view: RideActionView) {
+        
+        print("here_ mostrando")
         guard  let pickupCoordinates = locationManager?.location?.coordinate else {
             return
         }
-        
+        print("here_ mostrando 2")
         guard  let destinationCoordinates = view.destination?.location?.coordinate else {
             return
         }
         
+        print("here_ mostrando 3")
         shouldPresentLoadingView(true, message: "Finding you a ride ...")
+        print("here_ mostrando 4")
         Service.shared.uploadTrip(pickupCoordinates, destinationCoordinates) { (error, ref) in
             if let error = error {
                 print("DEBUG: error in confirm UBERX \(error.localizedDescription)")
@@ -526,7 +546,10 @@ extension HomeController: PickupControllerDelegate {
         
         
         self.dismiss(animated: true){
-            self.animateRideActionVIew(shouldShow: true, config: .tripAccepted)
+            Service.shared.fetchUserData(uid: trip.passengerUid) { (passenger) in
+                self.animateRideActionVIew(shouldShow: true, config: .tripAccepted, user: passenger)
+            }
+            
         }
     }
     
