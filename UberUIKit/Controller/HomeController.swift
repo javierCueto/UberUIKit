@@ -354,6 +354,12 @@ private extension HomeController{
             mapView.removeOverlay(mapView.overlays[0])
         }
     }
+    
+    func centerMapOnUserLocation(){
+        guard let coordinate = locationManager?.location?.coordinate else {return}
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 2000, longitudinalMeters: 2000)
+        mapView.setRegion(region, animated: true)
+    }
 }
 
 // MARK: - MKMapViewDelegate
@@ -508,10 +514,18 @@ extension HomeController: RideActionViewDelegate{
                 return
             }
             
+            self.centerMapOnUserLocation()
+            
             self.animateRideActionVIew(shouldShow: false)
+            self.removeAnnotationsAndOverlay()
+            
+            self.actionButton.setImage(#imageLiteral(resourceName: "menu_icon").withRenderingMode(.alwaysOriginal), for: .normal)
+            self.actionButtonConfig = .showMenu
    
         }
     }
+    
+    
     
     func uploadTrip(_ view: RideActionView) {
         
@@ -559,6 +573,9 @@ extension HomeController: PickupControllerDelegate {
         Service.shared.observeTripCancelled(trip: trip) {
             self.removeAnnotationsAndOverlay()
             self.animateRideActionVIew(shouldShow: false)
+            self.centerMapOnUserLocation()
+            
+            self.presentAlertController(withTitle: "Oops!",withMessage: "The passenger has decided to cancel this ride. press OK to continue.")
         }
         
         
