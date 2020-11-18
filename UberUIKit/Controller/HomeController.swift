@@ -501,6 +501,18 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate{
 
 
 extension HomeController: RideActionViewDelegate{
+    func cancelTrip() {
+        Service.shared.cancelTrip { (error, ref) in
+            if let error = error {
+                print("DEBUG: Error deleting trip ...")
+                return
+            }
+            
+            self.animateRideActionVIew(shouldShow: false)
+   
+        }
+    }
+    
     func uploadTrip(_ view: RideActionView) {
         
         print("here_ mostrando")
