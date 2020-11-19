@@ -110,4 +110,8 @@ struct Service {
         geofire.setLocation(location, forKey: uid)
     }
     
+    func updateTripState(trip: Trip, state: TripState){
+        REF_TRIPS.child(trip.passengerUid).child("state").setValue(state.rawValue)
+    }
+    
 }
