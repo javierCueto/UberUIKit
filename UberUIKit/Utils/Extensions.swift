@@ -169,7 +169,7 @@ extension MKMapView {
             
         }
         
-        let insets = UIEdgeInsets(top: 100, left: 100, bottom: 250, right: 100)
+        let insets = UIEdgeInsets(top: 100, left: 100, bottom: 300, right: 100)
         setVisibleMapRect(zoomReact,edgePadding: insets , animated: true)
     }
 }
@@ -230,4 +230,10 @@ extension UIViewController {
             }
         }
     }
+}
+
+
+func myPrint(_ p: String){
+    let meesage = "_____ DEBUG: \(p) _____"
+    print(meesage)
 }

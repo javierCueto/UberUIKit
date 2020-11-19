@@ -92,6 +92,7 @@ class HomeController: UIViewController{
         Service.shared.observeCurrentTrip { (trip) in
             self.trip = trip
             guard let state = trip.state else {return}
+            guard let driverUid = trip.driverUid else { return }
            
             
             switch state {
@@ -100,9 +101,9 @@ class HomeController: UIViewController{
                 break
             case .accepted:
                 self.shouldPresentLoadingView(false)
-                
-                guard let driverUid = trip.driverUid else { return }
-                
+                self.removeAnnotationsAndOverlay()
+                self.zoomForActiveTrip(withDriver: driverUid)
+        
                 Service.shared.fetchUserData(uid: driverUid) { (driver) in
                     self.animateRideActionVIew(shouldShow: true, config: .tripAccepted, user: driver)
                 }
@@ -137,6 +138,7 @@ class HomeController: UIViewController{
                     guard let driverAnno = annotation as? DriverAnnotation else { return false}
                     if driverAnno.uid == driver.uid {
                         driverAnno.updateAnnotationPosition(with: coordinate)
+                        self.zoomForActiveTrip(withDriver: driver.uid)
                         return true
                     }
                     return false
@@ -376,6 +378,23 @@ private extension HomeController{
         
         let region = CLCircularRegion(center: coordinates, radius: 25, identifier: "pickup")
         locationManager?.startMonitoring(for: region)
+    }
+    
+    func zoomForActiveTrip(withDriver uid: String){
+        var annotations = [MKAnnotation]()
+        self.mapView.annotations.forEach { (annotation) in
+           
+            if let anno = annotation as? DriverAnnotation {
+                if anno.uid == uid {
+                    annotations.append(anno)
+                }
+            }
+            
+            if let userAnno = annotation as? MKUserLocation {
+                annotations.append(userAnno)
+            }
+        }
+        self.mapView.zoomFit(annotations: annotations)
     }
 }
 
