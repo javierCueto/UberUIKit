@@ -360,6 +360,12 @@ private extension HomeController{
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 2000, longitudinalMeters: 2000)
         mapView.setRegion(region, animated: true)
     }
+    
+    func setCustomRegion(withCoordinates coordinates: CLLocationCoordinate2D){
+        
+        let region = CLCircularRegion(center: coordinates, radius: 25, identifier: "pickup")
+        locationManager?.startMonitoring(for: region)
+    }
 }
 
 // MARK: - MKMapViewDelegate
@@ -401,7 +407,16 @@ extension HomeController: MKMapViewDelegate{
 // MARK: -  location services
 extension HomeController: CLLocationManagerDelegate{
     
+    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+        print("DEBUG: Did start monitoring for region \(region)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        print("DEBUG: Driver di enter passenger region ...")
+    }
+    
     func enableLocationServices(){
+        locationManager?.delegate = self
         switch CLLocationManager.authorizationStatus(){
         
         case .notDetermined:
@@ -520,7 +535,7 @@ extension HomeController: RideActionViewDelegate{
     func cancelTrip() {
         Service.shared.cancelTrip { (error, ref) in
             if let error = error {
-                print("DEBUG: Error deleting trip ...")
+                print("DEBUG: Error deleting trip ...\(error.localizedDescription)")
                 return
             }
             
@@ -531,6 +546,8 @@ extension HomeController: RideActionViewDelegate{
             
             self.actionButton.setImage(#imageLiteral(resourceName: "menu_icon").withRenderingMode(.alwaysOriginal), for: .normal)
             self.actionButtonConfig = .showMenu
+            
+            self.inputActivationView.alpha = 1
    
         }
     }
@@ -572,6 +589,8 @@ extension HomeController: PickupControllerDelegate {
         anno.coordinate = trip.pickupCoordinates
         mapView.addAnnotation(anno)
         mapView.selectAnnotation(anno, animated: true)
+        
+        setCustomRegion(withCoordinates: trip.pickupCoordinates)
         
         let placeMark = MKPlacemark(coordinate: trip.pickupCoordinates)
         let mapItem = MKMapItem(placemark: placeMark)
