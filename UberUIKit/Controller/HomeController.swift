@@ -82,7 +82,7 @@ class HomeController: UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        guard let trip = trip else { return }
+        guard let _ = trip else { return }
         
     }
     
@@ -274,7 +274,7 @@ class HomeController: UIViewController{
                 rideActionView.user = user
             }
             
-            rideActionView.configureUI(withCOnfig: config)
+            rideActionView.config = config
            
         }
         
@@ -413,7 +413,9 @@ extension HomeController: CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         print("DEBUG: Driver di enter passenger region ...")
+        self.rideActionView.config = .pickupPassenger
     }
+    
     
     func enableLocationServices(){
         locationManager?.delegate = self

@@ -59,11 +59,13 @@ class RideActionView: UIView {
         didSet {
             titleLabel.text = destination?.name
             addressLabel.text = destination?.address
-            print("DEBUG:_______________________________________________ \(addressLabel.text)")
+           
         }
     }
     
-    var config = RideActionViewConfiguration()
+    var config = RideActionViewConfiguration() {
+        didSet { configureUI(withCOnfig: config) }
+    }
     var buttonAction = ButtonAction()
     weak var delegate: RideActionViewDelegate?
     var user: User?
@@ -190,7 +192,7 @@ class RideActionView: UIView {
     
     
     // MARK: -  helper functions
-    func configureUI(withCOnfig config: RideActionViewConfiguration){
+    private func configureUI(withCOnfig config: RideActionViewConfiguration){
         
         
         switch config {
