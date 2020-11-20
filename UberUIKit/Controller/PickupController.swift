@@ -88,10 +88,7 @@ class PickupController: UIViewController {
         let region = MKCoordinateRegion(center: trip.pickupCoordinates, latitudinalMeters: 1000 , longitudinalMeters: 1000)
         mapview.setRegion(region, animated: true)
         
-        let anno = MKPointAnnotation()
-        anno.coordinate = trip.pickupCoordinates
-        mapview.addAnnotation(anno)
-        mapview.selectAnnotation(anno, animated: true)
+        mapview.addAnnotationAndSelected(forCoordinates: trip.pickupCoordinates)
         
     }
     

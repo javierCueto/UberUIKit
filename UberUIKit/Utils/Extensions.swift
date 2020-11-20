@@ -172,6 +172,13 @@ extension MKMapView {
         let insets = UIEdgeInsets(top: 100, left: 100, bottom: 300, right: 100)
         setVisibleMapRect(zoomReact,edgePadding: insets , animated: true)
     }
+    
+    func addAnnotationAndSelected(forCoordinates coordinate: CLLocationCoordinate2D){
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        addAnnotation(annotation)
+        selectAnnotation(annotation, animated: true)
+    }
 }
 
 
