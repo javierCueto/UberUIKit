@@ -21,6 +21,12 @@ private enum ActionButtonConfiguration{
     }
 }
 
+private enum AnnotationType: String {
+    case pickup
+    case destination
+    
+}
+
 class HomeController: UIViewController{
     
     // MARK: -  properties
@@ -110,7 +116,8 @@ class HomeController: UIViewController{
             case .driverArrived:
                 self.rideActionView.config = .driverArrived
             case .inProgress:
-                break
+                self.rideActionView.config = .tripInProgress
+                
             case .completed:
                 break
             }
@@ -127,8 +134,11 @@ class HomeController: UIViewController{
             
             let placeMark = MKPlacemark(coordinate: trip.destinationCoordinates)
             let mapItem = MKMapItem(placemark: placeMark)
+            
+            
+            self.setCustomRegion(withType: .destination, withCoordinates: trip.destinationCoordinates)
             self.generatePolyline(toDestination: mapItem)
-            //self.mapView.zoomFit(annotations: mapView.annotations)
+           
             
             
         }
@@ -389,9 +399,9 @@ private extension HomeController{
         mapView.setRegion(region, animated: true)
     }
     
-    func setCustomRegion(withCoordinates coordinates: CLLocationCoordinate2D){
+    func setCustomRegion(withType type: AnnotationType, withCoordinates coordinates: CLLocationCoordinate2D){
         
-        let region = CLCircularRegion(center: coordinates, radius: 25, identifier: "pickup")
+        let region = CLCircularRegion(center: coordinates, radius: 25, identifier: type.rawValue)
         locationManager?.startMonitoring(for: region)
     }
     
@@ -455,7 +465,13 @@ extension HomeController: MKMapViewDelegate{
 extension HomeController: CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
-        print("DEBUG: Did start monitoring for region \(region)")
+        if region.identifier == AnnotationType.pickup.rawValue {
+            myPrint("Did start monitoring pick up region \(region)")
+        }
+        
+        if region.identifier == AnnotationType.destination.rawValue {
+            myPrint("Did start monitoring destination region \(region)")
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
@@ -642,7 +658,7 @@ extension HomeController: PickupControllerDelegate {
         
         self.mapView.addAnnotationAndSelected(forCoordinates: trip.pickupCoordinates)
         
-        setCustomRegion(withCoordinates: trip.pickupCoordinates)
+        setCustomRegion(withType: .pickup, withCoordinates: trip.pickupCoordinates)
         
         let placeMark = MKPlacemark(coordinate: trip.pickupCoordinates)
         let mapItem = MKMapItem(placemark: placeMark)
